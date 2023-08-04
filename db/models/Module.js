@@ -2,10 +2,11 @@ import mongoose from 'mongoose'
 
 const moduleSchema = new mongoose.Schema(
   {
-    id: String,
+    id: Number,
     pathName: String,
     displayName: String,
     icon: String,
+    description: String,
     prerequisites: Array,
     script: Array
   }
