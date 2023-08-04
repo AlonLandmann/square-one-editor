@@ -7,8 +7,8 @@ export default async function handler(req, res) {
   try {
     switch (req.method) {
       case 'GET':
-        const getCursor = await Module.rsfindOne(
-          { urlId: req.query.urlId }
+        const getCursor = await Module.findOne(
+          { pathName: req.query.pathName }
         )
   
         if (getCursor) {
@@ -20,8 +20,8 @@ export default async function handler(req, res) {
         break;
 
       case 'PUT': 
-        const putCursor = await Module.rsfindOneAndUpdate(
-          { urlId: req.query.urlId },
+        const putCursor = await Module.findOneAndUpdate(
+          { pathName: req.query.pathName },
           req.body,
           { new: true, runValidators: true }
         )
