@@ -1,0 +1,8 @@
+.root {
+  width: min(100%, 800px);
+  margin: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

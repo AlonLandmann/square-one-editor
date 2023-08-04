@@ -11,7 +11,7 @@ import css from '@/scss/main/MainRoot.module.scss'
 
 export default function MainRoot({ script }) {
   return (
-    <div className={css.script}>
+    <div className={css.root}>
       {script.map(unit => (
         <div key={uuid()}>
           {/* {unit.type === 'heading' && <Heading unit={unit} />} */}
