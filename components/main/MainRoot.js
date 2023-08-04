@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid'
 // import Heading from '@/components/units/Heading'
 import Text from '@/components/units/Text'
 import Notion from '@/components/units/Notion'
@@ -12,7 +13,7 @@ export default function MainRoot({ script }) {
   return (
     <div className={css.script}>
       {script.map(unit => (
-        <div key={unit.index}>
+        <div key={uuid()}>
           {/* {unit.type === 'heading' && <Heading unit={unit} />} */}
           {unit.type === 'text' && <Text unit={unit} />}
           {unit.type === 'notion' && <Notion unit={unit} />}

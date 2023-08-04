@@ -1,5 +1,6 @@
 
 import { useState } from 'react'
+import { v4 as uuid } from 'uuid'
 import { cloneDeep } from 'lodash'
 import Headline from '@/components/parts/Headline'
 import Part from '@/components/parts/Part'
@@ -41,7 +42,7 @@ export default function Notion({ unit }) {
         <div className={css.parts}>
           {unit.parts.map((part, j) => (
             <Part
-              key={part.index}
+              key={uuid()}
               unit={unit}
               j={j}
             />

@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid'
 import { InlineMath } from 'react-katex'
 import 'katex/dist/katex.min.css'
 
@@ -28,14 +29,14 @@ export default function TeX({ tex }) {
 
   function pushText() {
     parsed.push(
-      <span key={parsed.length}>{main}</span>
+      <span key={uuid()}>{main}</span>
     )
 
     main = ''
   }
   function pushMath() {
     parsed.push(
-      <InlineMath key={parsed.length}>{main}</InlineMath>
+      <InlineMath key={uuid()}>{main}</InlineMath>
     )
 
     main = ''

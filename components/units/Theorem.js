@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { v4 as uuid } from 'uuid'
 import { cloneDeep } from 'lodash'
 import Headline from '@/components/parts/Headline'
 import Subtheorem from '@/components/parts/Subtheorem'
@@ -58,7 +59,7 @@ export default function Theorem({ unit }) {
         <div className={css.parts}>
           {unit.parts.map((part, j) => (
             <Subtheorem
-              key={part.index}
+              key={uuid()}
               unit={unit}
               j={j}
             />
