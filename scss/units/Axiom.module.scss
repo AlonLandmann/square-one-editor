@@ -1,0 +1,21 @@
+.container {
+  padding: 30px 30px 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+
+  .content {
+    padding-bottom: 10px;
+  
+    .withoutForm {
+      display: flex;
+      gap: 30px;
+      
+      .withoutButton {
+        flex-grow: 1;
+      }
+    }
+  }
+  .parts {
+    padding-top: 5px;
+  }
+}

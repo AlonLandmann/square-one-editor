@@ -1,0 +1,32 @@
+.container {
+  padding-top: 15px;
+  display: flex;
+  gap: 30px;
+}
+.form {
+  flex-grow: 1;
+  
+  & textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    color: rgb(104, 198, 222);
+    background: rgba(#0d1117, 0.8);
+    resize: none;
+  }
+}
+.submit {
+  min-width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #aaa;
+  background: #eee;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: #ddd;
+  }
+}

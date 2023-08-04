@@ -1,0 +1,26 @@
+.container {
+  padding: 10px 0px 10px 10px;
+
+  .withoutForm {
+    display: flex;
+    gap: 30px;
+
+    .withoutButton {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #888;
+  
+      .number {
+        min-width: 40px;
+        font-size: 14px;
+        text-align: center;
+        color: #aaa;
+      }
+      .content {
+        flex-grow: 1;
+      }
+    }
+  }
+}
