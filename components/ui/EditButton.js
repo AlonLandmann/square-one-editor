@@ -11,11 +11,6 @@ export default function EditButton({ editFormInView, setEditFormInView, reset, n
   }
 
   return (
-    <div className={css.container} onClick={handleToggle}>
-      {!noIcon && (editFormInView
-        ? <i className='bi bi-x-lg'></i>
-        : <i className='bi bi-pencil-square'></i>
-      )}
-    </div>
+    <div className={css.container} onClick={handleToggle}></div>
   )
 }
