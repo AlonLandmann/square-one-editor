@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid'
+import Gap from '@/components/ui/Gap'
 import Heading from '@/components/units/Heading'
 import Text from '@/components/units/Text'
 import Notion from '@/components/units/Notion'
@@ -22,6 +23,7 @@ export default function MainRoot({ script }) {
           {unit.type === 'theorem' && <Theorem unit={unit} />}
           {unit.type === 'example' && <Example unit={unit} />}
           {unit.type === 'exercise' && <Exercise unit={unit} />}
+          <Gap index={unit.index} />
         </div>
       ))}
     </div>
