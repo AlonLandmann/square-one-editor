@@ -7,6 +7,7 @@ import Solution from '@/components/parts/Solution'
 import TeX from '@/components/parts/TeX'
 import EditButton from '@/components/ui/EditButton'
 import EditForm from '@/components/ui/EditForm'
+import SubGap from '@/components/ui/SubGap'
 import css from '@/scss/units/Exercise.module.scss'
 
 export default function Exercise({ unit }) {
@@ -58,11 +59,10 @@ export default function Exercise({ unit }) {
       {unit.parts &&
         <div className={css.parts}>
           {unit.parts.map((part, j) => (
-            <Subexercise
-              key={uuid()}
-              unit={unit}
-              j={j}
-            />
+            <div key={uuid()}>
+              <Subexercise unit={unit} j={j} />
+              <SubGap index={unit.index} subIndex={j} />
+            </div>
           ))}
         </div>
       }

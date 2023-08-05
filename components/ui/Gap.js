@@ -70,7 +70,6 @@ export default function Gap({ index }) {
     // setHover(false)
   }
 
-
   return (
     <div className={css.container}>
       <div

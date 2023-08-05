@@ -7,6 +7,7 @@ import Proof from '@/components/parts/Proof'
 import TeX from '@/components/parts/TeX'
 import EditButton from '@/components/ui/EditButton'
 import EditForm from '@/components/ui/EditForm'
+import SubGap from '@/components/ui/SubGap'
 import css from '@/scss/units/Theorem.module.scss'
 
 export default function Theorem({ unit }) {
@@ -58,11 +59,10 @@ export default function Theorem({ unit }) {
       {unit.parts &&
         <div className={css.parts}>
           {unit.parts.map((part, j) => (
-            <Subtheorem
-              key={uuid()}
-              unit={unit}
-              j={j}
-            />
+            <div key={uuid()}>
+              <Subtheorem unit={unit} j={j} />
+              <SubGap index={unit.index} subIndex={j} />
+            </div>
           ))}
         </div>
       }
