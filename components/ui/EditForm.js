@@ -1,6 +1,7 @@
-import TextareaAutosize from 'react-textarea-autosize'
 import { useRouter } from 'next/router'
+import TextareaAutosize from 'react-textarea-autosize'
 import prepareScript from '@/lib/prepareScript'
+import dehydrateScript from '@/lib/dehydrateScript'
 import css from '@/scss/ui/EditForm.module.scss'
 
 export default function EditForm({ unit, tex, setTex, update }) {
@@ -15,23 +16,19 @@ export default function EditForm({ unit, tex, setTex, update }) {
       const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
       const jsonGet = await resGet.json()
 
-      if (!jsonGet.success) {
-        return
-      }
-
-      let updatedCourse = jsonGet.data
-      let script = prepareScript(updatedCourse)
+      let updatedModule = jsonGet.data
+      let script = prepareScript(updatedModule)
 
       for (let i = 0; i < script.length; i += 1) {
         if (script[i].index === unit.index) {
-          updatedCourse.script[i] = update(script[i], tex)
+          updatedModule.script[i] = update(script[i], tex)
         }
       }
 
       const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
         method: 'PUT',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedCourse)
+        body: JSON.stringify(dehydrateScript(updatedModule))
       })
 
       const jsonPut = await resPut.json()

@@ -1,23 +1,44 @@
+import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { createNewUnit } from '@/lib/createNewUnit'
 import css from '@/scss/ui/Gap.module.scss'
 
 export default function Gap({ index }) {
   const [hover, setHover] = useState(false)
   const [selectionInView, setSelectionInView] = useState(false)
-  // const script = useScript()
+  const { query: { pathName } } = useRouter()
 
   function toggleSelection() {
     setSelectionInView(prev => !prev)
   }
-  function addUnit(event) {
-    // const typeToAdd = event.target.innerHTML
 
-    // let updatedScript = cloneDeep(script)
+  async function addUnit(type, withParts = false) {
+    try {
+      const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
+      const jsonGet = await resGet.json()
 
-    // updatedScript.splice(unitIndex + 1, 0, createEmptyUnit(typeToAdd))
-    // updateScript(refShift(updatedScript))
-    // setSelectionInView(false)
+      let updatedModule = jsonGet.data
+
+      updatedModule.script.splice(index + 1, 0, createNewUnit(type, withParts))
+
+      // XX refshift
+
+      const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
+        method: 'PUT',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedModule)
+      })
+
+      const jsonPut = await resPut.json()
+
+      if (jsonPut.success) {
+        window.location.reload()
+      }
+    } catch (error) {
+      console.log(error) 
+    }
   }
+
   function handleDragOver(event) {
     // event.preventDefault()
     // setHover(true)
@@ -64,20 +85,20 @@ export default function Gap({ index }) {
       {selectionInView &&
         <div className={css.selectionContainer}>
           <div className={css.selectionContent}>
-            <div className={css.unit} onClick={addUnit}>Heading</div>
-            <div className={css.unit} onClick={addUnit}>Text</div>
-            <div className={css.unit} onClick={addUnit}>Notion</div>
-            <div className={css.unit} onClick={addUnit}>Notion M</div>
-            <div className={css.unit} onClick={addUnit}>Definition</div>
-            <div className={css.unit} onClick={addUnit}>Definition M</div>
-            <div className={css.unit} onClick={addUnit}>Axiom</div>
-            <div className={css.unit} onClick={addUnit}>Axiom M</div>
-            <div className={css.unit} onClick={addUnit}>Theorem</div>
-            <div className={css.unit} onClick={addUnit}>Theorem M</div>
-            <div className={css.unit} onClick={addUnit}>Example</div>
-            <div className={css.unit} onClick={addUnit}>Example M</div>
-            <div className={css.unit} onClick={addUnit}>Exercise</div>
-            <div className={css.unit} onClick={addUnit}>Exercise M</div>
+            <div className={css.unit} onClick={() => { addUnit('heading') }}>Heading</div>
+            <div className={css.unit} onClick={() => { addUnit('text') }}>Text</div>
+            <div className={css.unit} onClick={() => { addUnit('notion') }}>Notion</div>
+            <div className={css.unit} onClick={() => { addUnit('notion', true) }}>Notion M</div>
+            <div className={css.unit} onClick={() => { addUnit('definition') }}>Definition</div>
+            <div className={css.unit} onClick={() => { addUnit('definition', true) }}>Definition M</div>
+            <div className={css.unit} onClick={() => { addUnit('axiom') }}>Axiom</div>
+            <div className={css.unit} onClick={() => { addUnit('axiom', true) }}>Axiom M</div>
+            <div className={css.unit} onClick={() => { addUnit('theorem') }}>Theorem</div>
+            <div className={css.unit} onClick={() => { addUnit('theorem', true) }}>Theorem M</div>
+            <div className={css.unit} onClick={() => { addUnit('example') }}>Example</div>
+            <div className={css.unit} onClick={() => { addUnit('example', true) }}>Example M</div>
+            <div className={css.unit} onClick={() => { addUnit('exercise') }}>Exercise</div>
+            <div className={css.unit} onClick={() => { addUnit('exercise', true) }}>Exercise M</div>
             <div className={css.cancel} onClick={toggleSelection}>
               <i className='bi bi-x-lg'></i>
             </div>
