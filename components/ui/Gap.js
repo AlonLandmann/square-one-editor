@@ -35,39 +35,59 @@ export default function Gap({ index }) {
         window.location.reload()
       }
     } catch (error) {
-      console.log(error) 
+      console.log(error)
     }
   }
 
   function handleDragOver(event) {
-    // event.preventDefault()
-    // setHover(true)
+    event.preventDefault()
+    setHover(true)
   }
   function handleDragLeave() {
-    // setHover(false)
+    setHover(false)
   }
-  function handleDrop(event) {
-    // const data = event.dataTransfer.getData('text/plain').split('-')
 
-    // if (data[0] === 'unit') {
-    //   event.preventDefault()
+  async function handleDrop(event) {
+    const [dataType, unitIndex] = event.dataTransfer.getData('text/plain').split('-')
 
-    //   const originIndex = Number(data[1])
+    if (dataType === 'unit') {
+      event.preventDefault()
 
-    //   let updatedScript = cloneDeep(script)
+      const originIndex = Number(unitIndex)
 
-    //   updatedScript.splice(unitIndex + 1, 0, updatedScript[originIndex])
+      try {
+        const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
+        const jsonGet = await resGet.json()
 
-    //   if (originIndex <= unitIndex) {
-    //     updatedScript.splice(originIndex, 1)
-    //   } else {
-    //     updatedScript.splice(originIndex + 1, 1)
-    //   }
+        let updatedModule = jsonGet.data
 
-    //   updateScript(refShift(updatedScript))
-    // }
+        updatedModule.script.splice(index + 1, 0, updatedModule.script[originIndex])
 
-    // setHover(false)
+        if (originIndex <= index) {
+          updatedModule.script.splice(originIndex, 1)
+        } else {
+          updatedModule.script.splice(originIndex + 1, 1)
+        }
+
+        // XX ref change
+
+        const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
+          method: 'PUT',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedModule)
+        })
+
+        const jsonPut = await resPut.json()
+
+        if (jsonPut.success) {
+          window.location.reload()
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    setHover(false)
   }
 
   return (
