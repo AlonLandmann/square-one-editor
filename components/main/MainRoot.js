@@ -6,7 +6,7 @@ import Definition from '@/components/units/Definition'
 import Axiom from '@/components/units/Axiom'
 import Theorem from '@/components/units/Theorem'
 import Example from '@/components/units/Example'
-// import Exercise from '@/components/units/Exercise'
+import Exercise from '@/components/units/Exercise'
 import css from '@/scss/main/MainRoot.module.scss'
 
 export default function MainRoot({ script }) {
@@ -21,7 +21,7 @@ export default function MainRoot({ script }) {
           {unit.type === 'axiom' && <Axiom unit={unit} />}
           {unit.type === 'theorem' && <Theorem unit={unit} />}
           {unit.type === 'example' && <Example unit={unit} />}
-          {/* {unit.type === 'exercise' && <Exercise unit={unit} />} */}
+          {unit.type === 'exercise' && <Exercise unit={unit} />}
         </div>
       ))}
     </div>

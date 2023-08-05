@@ -1,0 +1,26 @@
+.container {
+  margin-bottom: 10px;
+  padding: 25px 0px;
+  color: #555;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+
+  .withoutForm {
+    display: flex;
+    gap: 30px;
+    
+    .withoutButton {
+      padding: 0px 20px 0px 10px;
+      flex-grow: 1;
+
+      .heading {
+        padding-bottom: 32px;
+        color: #aaa;
+      }
+      .qed {
+        padding-top: 32px;
+        color: #aaa;
+      }
+    }
+  }
+}

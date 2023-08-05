@@ -1,0 +1,32 @@
+.container {
+  padding: 30px 30px 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+
+  .withoutSolution {
+    padding-bottom: 10px;
+
+    .withoutForm {
+      display: flex;
+      gap: 30px;
+
+      .withoutButton {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .interactive {
+    color: #555;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      color: #aaa
+    }
+  }
+
+  .parts {
+    padding-top: 5px;
+  }
+}
