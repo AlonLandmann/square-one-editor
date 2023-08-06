@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { createNewSubunit } from '@/lib/createNewSubunit'
+import subRefShift from '@/lib/subRefShift'
 import css from '@/scss/ui/SubGap.module.scss'
 
 export default function SubGap({ index, subIndex }) {
@@ -17,12 +18,10 @@ export default function SubGap({ index, subIndex }) {
 
       updatedModule.script[index].parts.splice(subIndex + 1, 0, createNewSubunit(type))
 
-      // XX refshift
-
       const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
         method: 'PUT',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedModule)
+        body: JSON.stringify(subRefShift(updatedModule))
       })
 
       const jsonPut = await resPut.json()
@@ -67,12 +66,10 @@ export default function SubGap({ index, subIndex }) {
           updatedModule.script[index].parts.splice(originSubIndex + 1, 1)
         }
 
-        // XX ref change
-
         const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
           method: 'PUT',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedModule)
+          body: JSON.stringify(subRefShift(updatedModule))
         })
 
         const jsonPut = await resPut.json()
