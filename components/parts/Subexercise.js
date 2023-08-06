@@ -11,6 +11,9 @@ export default function Subexercise({ unit, j }) {
   const [editFormInView, setEditFormInView] = useState(false)
   const [solutionInView, setSolutionInView] = useState(false)
 
+  function handleDragStart(event) {
+    event.dataTransfer.setData('text/plain', `subUnit-${unit.index}-${j}`)
+  }
   function toggleSolution() {
     setSolutionInView(prev => !prev)
   }
@@ -20,7 +23,7 @@ export default function Subexercise({ unit, j }) {
       <div className={css.withoutSolution}>
         <div className={css.withoutForm}>
           <div className={css.withoutButton} onClick={toggleSolution}>
-            <div className={css.number}>{j + 1}</div>
+            <div className={css.number} draggable onDragStart={handleDragStart}>{j + 1}</div>
             <div className={css.content}><TeX tex={tex} /></div>
           </div>
           <EditButton

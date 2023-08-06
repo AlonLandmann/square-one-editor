@@ -31,41 +31,61 @@ export default function SubGap({ index, subIndex }) {
         window.location.reload()
       }
     } catch (error) {
-      console.log(error) 
+      console.log(error)
     }
   }
 
   function handleDragOver(event) {
-    // event.preventDefault()
-    // setHover(true)
+    event.preventDefault()
+    setHover(true)
   }
-  function handleDragLeave(event) {
-    // setHover(false)
+  function handleDragLeave() {
+    setHover(false)
   }
-  function handleDrop(event) {
-    // const data = event.dataTransfer.getData('text/plain').split('-')
 
-    // if (data[0] === 'subtheorem') {
-    //   event.preventDefault()
+  async function handleDrop(event) {
+    const [dataType, unitIndex, subUnitIndex] = event.dataTransfer.getData('text/plain').split('-')
 
-    //   const originIndex = Number(data[1])
+    if (dataType === 'subUnit' && Number(unitIndex) === index) {
+      event.preventDefault()
 
-    //   let updatedScript = cloneDeep(script)
+      const originSubIndex = Number(subUnitIndex)
 
-    //   updatedScript[unitIndex].subtheorems.splice(
-    //     subtheoremIndex + 1, 0, updatedScript[unitIndex].subtheorems[originIndex]
-    //   )
+      try {
+        const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
+        const jsonGet = await resGet.json()
 
-    //   if (originIndex <= subtheoremIndex) {
-    //     updatedScript[unitIndex].subtheorems.splice(originIndex, 1)
-    //   } else {
-    //     updatedScript[unitIndex].subtheorems.splice(originIndex + 1, 1)
-    //   }
+        let updatedModule = jsonGet.data
 
-    //   updateScript(subRefShift(updatedScript))
-    // }
+        updatedModule.script[index].parts.splice(
+          subIndex + 1, 0, updatedModule.script[index].parts[originSubIndex]
+        )
 
-    // setHover(false)
+        if (originSubIndex <= subIndex) {
+          updatedModule.script[index].parts.splice(originSubIndex, 1)
+        } else {
+          updatedModule.script[index].parts.splice(originSubIndex + 1, 1)
+        }
+
+        // XX ref change
+
+        const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
+          method: 'PUT',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedModule)
+        })
+
+        const jsonPut = await resPut.json()
+
+        if (jsonPut.success) {
+          window.location.reload()
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    setHover(false)
   }
 
   return (

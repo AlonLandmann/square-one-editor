@@ -17,6 +17,12 @@
         font-size: 14px;
         text-align: center;
         color: #aaa;
+        cursor: pointer;
+        transition: all 0.15s ease-in-out;
+
+        &:hover {
+          color: #eee;
+        }
       }
       .content {
         flex-grow: 1;

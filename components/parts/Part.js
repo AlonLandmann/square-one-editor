@@ -9,11 +9,15 @@ export default function Part({ unit, j }) {
   const [tex, setTex] = useState(unit.parts[j].content)
   const [editFormInView, setEditFormInView] = useState(false)
 
+  function handleDragStart(event) {
+    event.dataTransfer.setData('text/plain', `subUnit-${unit.index}-${j}`)
+  }
+
   return (
     <div className={css.container}>
       <div className={css.withoutForm}>
         <div className={css.withoutButton}>
-          <div className={css.number}>{j + 1}</div>
+          <div className={css.number} draggable onDragStart={handleDragStart}>{j + 1}</div>
           <div className={css.content}><TeX tex={tex} /></div>
         </div>
         <EditButton

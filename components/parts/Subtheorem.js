@@ -11,6 +11,9 @@ export default function Subtheorem({ unit, j }) {
   const [editFormInView, setEditFormInView] = useState(false)
   const [proofInView, setProofInView] = useState(false)
 
+  function handleDragStart(event) {
+    event.dataTransfer.setData('text/plain', `subUnit-${unit.index}-${j}`)
+  }
   function toggleProof() {
     setProofInView(prev => !prev)
   }
@@ -20,7 +23,7 @@ export default function Subtheorem({ unit, j }) {
       <div className={css.withoutProof}>
         <div className={css.withoutForm}>
           <div className={css.withoutButton} onClick={toggleProof}>
-            <div className={css.number}>{j + 1}</div>
+            <div className={css.number} draggable onDragStart={handleDragStart}>{j + 1}</div>
             <div className={css.content}><TeX tex={tex} /></div>
           </div>
           <EditButton
