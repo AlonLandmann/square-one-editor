@@ -7,6 +7,8 @@ export default function TeX({ tex }) {
   let parsed = []
   let mode = 'text'
   let main = ''
+  
+  const mathSplits = /^(=|<|>|\\neq|\\geq|\\leq)/
 
   for (let i = 0; i <= tex.length; i += 1) {
     if (mode === 'text') {
@@ -26,6 +28,7 @@ export default function TeX({ tex }) {
 
       if (tex[i] === ']') { pushMath(); mode = 'text' }
       else if (tex[i] === '§') { pushMath(); pushSpacer(); mode = 'mathRef' }
+      else if (mathSplits.test(tex.slice(i))) { pushMath(); pushSpacer(); main = tex[i] }
       else { main = main.concat(tex[i]) }
 
     } else if (mode === 'mathRef') {
