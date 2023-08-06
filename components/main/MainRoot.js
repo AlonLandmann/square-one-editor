@@ -10,10 +10,10 @@ import Example from '@/components/units/Example'
 import Exercise from '@/components/units/Exercise'
 import css from '@/scss/main/MainRoot.module.scss'
 
-export default function MainRoot({ script }) {
+export default function MainRoot({ module }) {
   return (
     <div className={css.root}>
-      {script.map(unit => (
+      {module.script.map(unit => (
         <div key={uuid()}>
           {unit.type === 'heading' && <Heading unit={unit} />}
           {unit.type === 'text' && <Text unit={unit} />}

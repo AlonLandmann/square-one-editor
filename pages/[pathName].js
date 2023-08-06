@@ -2,9 +2,9 @@ import Head from 'next/head'
 import MainRoot from '@/components/main/MainRoot'
 import Module from '@/db/models/Module'
 import dbConnect from '@/db/dbConnect'
-import prepareScript from '@/lib/prepareScript'
+import hydrate from '@/lib/hydrate'
 
-export default function Main({ scriptJson }) {
+export default function Main({ moduleJson }) {
   return (
     <div>
       <Head>
@@ -14,7 +14,7 @@ export default function Main({ scriptJson }) {
       </Head>
 
       <main>
-        <MainRoot script={JSON.parse(scriptJson)} />
+        <MainRoot module={JSON.parse(moduleJson)} />
       </main>
     </div>
   )
@@ -24,11 +24,11 @@ export async function getServerSideProps({ query: { pathName } }) {
   dbConnect()
 
   const raw = await Module.findOne({ pathName: pathName }, { _id: 0 })
-  const script = prepareScript(raw)
+  const module = hydrate(raw)
 
   return {
     props: {
-      scriptJson: JSON.stringify(script)
+      moduleJson: JSON.stringify(module)
     }
   }
 }
