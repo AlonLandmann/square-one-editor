@@ -1,0 +1,9 @@
+.container {
+  color: rgb(104, 198, 222);
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+  
+  &:hover {
+    color: rgb(228, 243, 247);
+  }
+}
