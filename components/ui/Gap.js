@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { createNewUnit } from '@/lib/createNewUnit'
+import hydrate from '@/lib/hydrate'
+import refShift from '@/lib/refShift'
 import css from '@/scss/ui/Gap.module.scss'
 
 export default function Gap({ index }) {
@@ -17,16 +19,14 @@ export default function Gap({ index }) {
       const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
       const jsonGet = await resGet.json()
 
-      let updatedModule = jsonGet.data
+      let updatedModule = hydrate(jsonGet.data)
 
       updatedModule.script.splice(index + 1, 0, createNewUnit(type, withParts))
-
-      // XX refshift
 
       const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
         method: 'PUT',
         headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedModule)
+        body: JSON.stringify(refShift(updatedModule))
       })
 
       const jsonPut = await resPut.json()
@@ -59,7 +59,7 @@ export default function Gap({ index }) {
         const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
         const jsonGet = await resGet.json()
 
-        let updatedModule = jsonGet.data
+        let updatedModule = hydrate(jsonGet.data)
 
         updatedModule.script.splice(index + 1, 0, updatedModule.script[originIndex])
 
@@ -69,12 +69,10 @@ export default function Gap({ index }) {
           updatedModule.script.splice(originIndex + 1, 1)
         }
 
-        // XX ref change
-
         const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
           method: 'PUT',
           headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedModule)
+          body: JSON.stringify(refShift(updatedModule))
         })
 
         const jsonPut = await resPut.json()
