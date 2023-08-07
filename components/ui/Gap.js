@@ -3,7 +3,9 @@ import { useState } from 'react'
 import { createNewUnit } from '@/lib/createNewUnit'
 import hydrate from '@/lib/hydrate'
 import refShift from '@/lib/refShift'
+import updateModule from '@/lib/updateModule'
 import css from '@/scss/ui/Gap.module.scss'
+import dehydrate from '@/lib/dehydrate'
 
 export default function Gap({ index }) {
   const [hover, setHover] = useState(false)
@@ -13,32 +15,16 @@ export default function Gap({ index }) {
   function toggleSelection() {
     setSelectionInView(prev => !prev)
   }
+  function addUnit(type, withParts = false) {
+    updateModule(pathName, module => {
+      module = hydrate(module)
+      module.script.splice(index + 1, 0, createNewUnit(type, withParts))
+      module = refShift(module)
+      module = dehydrate(module)
 
-  async function addUnit(type, withParts = false) {
-    try {
-      const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
-      const jsonGet = await resGet.json()
-
-      let updatedModule = hydrate(jsonGet.data)
-
-      updatedModule.script.splice(index + 1, 0, createNewUnit(type, withParts))
-
-      const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
-        method: 'PUT',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(refShift(updatedModule))
-      })
-
-      const jsonPut = await resPut.json()
-
-      if (jsonPut.success) {
-        window.location.reload()
-      }
-    } catch (error) {
-      console.log(error)
-    }
+      return module
+    })
   }
-
   function handleDragOver(event) {
     event.preventDefault()
     setHover(true)
@@ -46,43 +32,29 @@ export default function Gap({ index }) {
   function handleDragLeave() {
     setHover(false)
   }
-
-  async function handleDrop(event) {
-    const [dataType, unitIndex] = event.dataTransfer.getData('text/plain').split('-')
+  function handleDrop(event) {
+    const [dataType, i] = event.dataTransfer.getData('text/plain').split('-')
 
     if (dataType === 'unit') {
       event.preventDefault()
 
-      const originIndex = Number(unitIndex)
+      const originIndex = Number(i)
 
-      try {
-        const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
-        const jsonGet = await resGet.json()
-
-        let updatedModule = hydrate(jsonGet.data)
-
-        updatedModule.script.splice(index + 1, 0, updatedModule.script[originIndex])
+      updateModule(pathName, module => {
+        module = hydrate(module)
+        module.script.splice(index + 1, 0, module.script[originIndex])
 
         if (originIndex <= index) {
-          updatedModule.script.splice(originIndex, 1)
+          module.script.splice(originIndex, 1)
         } else {
-          updatedModule.script.splice(originIndex + 1, 1)
+          module.script.splice(originIndex + 1, 1)
         }
 
-        const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
-          method: 'PUT',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(refShift(updatedModule))
-        })
+        module = refShift(module)
+        module = dehydrate(module)
 
-        const jsonPut = await resPut.json()
-
-        if (jsonPut.success) {
-          window.location.reload()
-        }
-      } catch (error) {
-        console.log(error)
-      }
+        return module
+      })
     }
 
     setHover(false)

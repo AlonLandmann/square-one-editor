@@ -2,38 +2,27 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { createNewSubunit } from '@/lib/createNewSubunit'
 import subRefShift from '@/lib/subRefShift'
+import updateModule from '@/lib/updateModule'
 import css from '@/scss/ui/SubGap.module.scss'
+import hydrate from '@/lib/hydrate'
+import dehydrate from '@/lib/dehydrate'
 
 export default function SubGap({ index, subIndex }) {
   const [hover, setHover] = useState(false)
   const { query: { pathName } } = useRouter()
 
-  async function handleAdd() {
-    try {
-      const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
-      const jsonGet = await resGet.json()
+  function addSubUnit() {
+    updateModule(pathName, module => {
+      const newSubUnit = createNewSubunit(module.script[index].type)
 
-      let updatedModule = jsonGet.data
-      let type = updatedModule.script[index].type
+      module = hydrate(module)
+      module.script[index].parts.splice(subIndex + 1, 0, newSubUnit)
+      module = subRefShift(module)
+      module = dehydrate(module)
 
-      updatedModule.script[index].parts.splice(subIndex + 1, 0, createNewSubunit(type))
-
-      const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
-        method: 'PUT',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify(subRefShift(updatedModule))
-      })
-
-      const jsonPut = await resPut.json()
-
-      if (jsonPut.success) {
-        window.location.reload()
-      }
-    } catch (error) {
-      console.log(error)
-    }
+      return module
+    })
   }
-
   function handleDragOver(event) {
     event.preventDefault()
     setHover(true)
@@ -41,45 +30,29 @@ export default function SubGap({ index, subIndex }) {
   function handleDragLeave() {
     setHover(false)
   }
+  function handleDrop(event) {
+    const [dataType, i, j] = event.dataTransfer.getData('text/plain').split('-')
 
-  async function handleDrop(event) {
-    const [dataType, unitIndex, subUnitIndex] = event.dataTransfer.getData('text/plain').split('-')
-
-    if (dataType === 'subUnit' && Number(unitIndex) === index) {
+    if (dataType === 'subUnit' && Number(i) === index) {
       event.preventDefault()
 
-      const originSubIndex = Number(subUnitIndex)
+      const originSubIndex = Number(j)
 
-      try {
-        const resGet = await fetch(`${window.location.origin}/api/${pathName}`)
-        const jsonGet = await resGet.json()
-
-        let updatedModule = jsonGet.data
-
-        updatedModule.script[index].parts.splice(
-          subIndex + 1, 0, updatedModule.script[index].parts[originSubIndex]
-        )
+      updateModule(pathName, module => {
+        module = hydrate(module)
+        module.script[index].parts.splice(subIndex + 1, 0, module.script[index].parts[originSubIndex])
 
         if (originSubIndex <= subIndex) {
-          updatedModule.script[index].parts.splice(originSubIndex, 1)
+          module.script[index].parts.splice(originSubIndex, 1)
         } else {
-          updatedModule.script[index].parts.splice(originSubIndex + 1, 1)
+          module.script[index].parts.splice(originSubIndex + 1, 1)
         }
 
-        const resPut = await fetch(`${window.location.origin}/api/${pathName}`, {
-          method: 'PUT',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify(subRefShift(updatedModule))
-        })
+        module = subRefShift(module)
+        module = dehydrate(module)
 
-        const jsonPut = await resPut.json()
-
-        if (jsonPut.success) {
-          window.location.reload()
-        }
-      } catch (error) {
-        console.log(error)
-      }
+        return module
+      })
     }
 
     setHover(false)
@@ -88,7 +61,7 @@ export default function SubGap({ index, subIndex }) {
   return (
     <div
       className={`${css.container} ${hover ? css.hovered : ''}`}
-      onClick={handleAdd}
+      onClick={addSubUnit}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
