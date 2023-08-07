@@ -1,13 +1,20 @@
 .container {
   padding: 30px 30px 10px;
+  display: flex;
+  gap: 10px;
 
-  .withoutForm {
-    display: flex;
-    gap: 30px;
-    
-    .withoutButton {
+  .withoutDeleteButton {
+    flex-grow: 1;
+
+    .withoutForm {
       flex-grow: 1;
-      font-size: 24px;
+      display: flex;
+      gap: 30px;
+
+      .withoutEditButton {
+        flex-grow: 1;
+        font-size: 24px;
+      }
     }
-  }  
+  }
 }

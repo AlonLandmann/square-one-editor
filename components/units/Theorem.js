@@ -5,8 +5,9 @@ import Headline from '@/components/parts/Headline'
 import Subtheorem from '@/components/parts/Subtheorem'
 import Proof from '@/components/parts/Proof'
 import TeX from '@/components/parts/TeX'
-import EditButton from '@/components/ui/EditButton'
 import EditForm from '@/components/ui/EditForm'
+import EditButton from '@/components/ui/EditButton'
+import DeleteButton from '@/components/ui/DeleteButton'
 import SubGap from '@/components/ui/SubGap'
 import css from '@/scss/units/Theorem.module.scss'
 
@@ -22,30 +23,35 @@ export default function Theorem({ unit }) {
   return (
     <div className={css.container}>
       <div className={css.withoutProof}>
-        <div className={css.withoutForm}>
-          <div
-            className={`${css.withoutButton} ${!unit.parts ? css.interactive : ''}`}
-            onClick={toggleProof}
-          >
-            <Headline unit={unit} />
-            <TeX tex={tex} />
+        <div className={css.withoutDeleteButton}>
+          <div className={css.withoutForm}>
+            <div
+              className={`${css.withoutEditButton} ${!unit.parts ? css.interactive : ''}`}
+              onClick={toggleProof}
+            >
+              <Headline unit={unit} />
+              <TeX tex={tex} />
+            </div>
+            <EditButton
+              editFormInView={editFormInView}
+              setEditFormInView={setEditFormInView}
+              reset={() => { setTex(unit.content) }}
+            />
           </div>
-          <EditButton
-            editFormInView={editFormInView}
-            setEditFormInView={setEditFormInView}
-            reset={() => { setTex(unit.content) }}
-          />
+          {editFormInView &&
+            <EditForm
+              unit={unit}
+              tex={tex}
+              setTex={setTex}
+              update={(u, tex) => (
+                { ...cloneDeep(u), content: tex }
+              )}
+            />
+          }
         </div>
-        {editFormInView &&
-          <EditForm
-            unit={unit}
-            tex={tex}
-            setTex={setTex}
-            update={(u, tex) => (
-              { ...cloneDeep(u), content: tex }
-            )}
-          />
-        }
+        <DeleteButton
+          unit={unit}
+        />
       </div>
       {!unit.parts && proofInView &&
         <Proof

@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash'
 import TeX from '@/components/parts/TeX'
 import EditButton from '@/components/ui/EditButton'
 import EditForm from '@/components/ui/EditForm'
+import DeleteButton from '../ui/DeleteButton'
 import css from '@/scss/units/Text.module.scss'
 
 export default function Text({ unit }) {
@@ -11,26 +12,32 @@ export default function Text({ unit }) {
 
   return (
     <div className={css.container}>
-      <div className={css.withoutForm}>
-        <div className={css.withoutButton}>
-          <TeX tex={tex} />
+      <div className={css.withoutDeleteButton}>
+
+        <div className={css.withoutForm}>
+          <div className={css.withoutEditButton}>
+            <TeX tex={tex} />
+          </div>
+          <EditButton
+            editFormInView={editFormInView}
+            setEditFormInView={setEditFormInView}
+            reset={() => { setTex(unit.content) }}
+          />
         </div>
-        <EditButton
-          editFormInView={editFormInView}
-          setEditFormInView={setEditFormInView}
-          reset={() => { setTex(unit.content) }}
-        />
+        {editFormInView &&
+          <EditForm
+            unit={unit}
+            tex={tex}
+            setTex={setTex}
+            update={(u, tex) => (
+              { ...cloneDeep(u), content: tex }
+            )}
+          />
+        }
       </div>
-      {editFormInView &&
-        <EditForm
-          unit={unit}
-          tex={tex}
-          setTex={setTex}
-          update={(u, tex) => (
-            { ...cloneDeep(u), content: tex }
-          )}
-        />
-      }
+      <DeleteButton
+        unit={unit}
+      />
     </div>
   )
 }

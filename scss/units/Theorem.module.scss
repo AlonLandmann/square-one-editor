@@ -5,13 +5,20 @@
 
   .withoutProof {
     padding-bottom: 10px;
+    display: flex;
+    gap: 10px;
 
-    .withoutForm {
-      display: flex;
-      gap: 30px;
+    .withoutDeleteButton {
+      flex-grow: 1;
 
-      .withoutButton {
+      .withoutForm {
         flex-grow: 1;
+        display: flex;
+        gap: 30px;
+
+        .withoutEditButton {
+          flex-grow: 1;
+        }
       }
     }
   }

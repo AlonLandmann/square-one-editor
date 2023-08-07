@@ -5,16 +5,24 @@
 
   .content {
     padding-bottom: 10px;
-  
-    .withoutForm {
-      display: flex;
-      gap: 30px;
-      
-      .withoutButton {
+    display: flex;
+    gap: 10px;
+
+    .withoutDeleteButton {
+      flex-grow: 1;
+
+      .withoutForm {
         flex-grow: 1;
+        display: flex;
+        gap: 30px;
+
+        .withoutEditButton {
+          flex-grow: 1;
+        }
       }
     }
   }
+
   .parts {
     padding-top: 5px;
   }
