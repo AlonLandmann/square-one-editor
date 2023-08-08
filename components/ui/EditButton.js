@@ -1,6 +1,6 @@
 import css from '@/scss/ui/EditButton.module.scss'
 
-export default function EditButton({ editFormInView, setEditFormInView, reset, noIcon }) {
+export default function EditButton({ editFormInView, setEditFormInView, reset }) {
   function handleToggle() {
     if (editFormInView) {
       reset()

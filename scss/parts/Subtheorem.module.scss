@@ -3,39 +3,46 @@
 
   .withoutProof {
     padding-bottom: 10px;
+    display: flex;
+    gap: 10px;
 
-    .withoutForm {
-      display: flex;
-      gap: 30px;
+    .withoutDeleteButton {
+      flex-grow: 1;
 
-      .withoutButton {
+      .withoutForm {
         flex-grow: 1;
         display: flex;
-        align-items: center;
-        gap: 12px;
-        color: #555;
-        transition: all 0.15s ease;
-        cursor: pointer;
+        gap: 30px;
 
-        &:hover {
-          color: #aaa;
-        }
-
-        .number {
-          min-width: 40px;
-          font-size: 14px;
-          text-align: center;
-          color: #ccc;
-          cursor: pointer;
-          transition: all 0.15s ease-in-out;
-  
-          &:hover {
-            color: #eee;
-          }
-        }
-
-        .content {
+        .withoutEditButton {
           flex-grow: 1;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: #555;
+          transition: all 0.15s ease;
+          cursor: pointer;
+
+          &:hover {
+            color: #aaa;
+          }
+
+          .number {
+            min-width: 40px;
+            font-size: 14px;
+            text-align: center;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+
+            &:hover {
+              color: #eee;
+            }
+          }
+
+          .content {
+            flex-grow: 1;
+          }
         }
       }
     }
