@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid'
 import { InlineMath } from 'react-katex'
 import Reference from '@/components/parts/Reference'
+import Derivation from '@/components/parts/Derivation'
 import 'katex/dist/katex.min.css'
 
 export default function TeX({ tex }) {
@@ -16,6 +17,7 @@ export default function TeX({ tex }) {
       if (i === tex.length) { pushText() }
       else if (tex[i] === '[') { pushText(); mode = 'math' }
       else if (tex[i] === '§') { pushText(); mode = 'textRef' }
+      else if (tex[i] === '£') { pushText(); mode = 'derivation' }
       else if (tex[i] === '%') { pushText(); pushNewLine() }
       else { main = main.concat(tex[i]) }
 
@@ -36,6 +38,11 @@ export default function TeX({ tex }) {
       if (tex[i] === '§') { pushMathRef(); pushSpacer(); mode = 'math' }
       else { main = main.concat(tex[i]) }
 
+    } else if (mode === 'derivation') {
+
+      if (tex[i] === '£') { pushDerivation(); mode = 'text' }
+      else { main = main.concat(tex[i]) }
+      
     }
   }
 
@@ -79,6 +86,13 @@ export default function TeX({ tex }) {
           {main.split(',')[0]}
         </InlineMath>
       </Reference>
+    )
+
+    main = ''
+  }
+  function pushDerivation() {
+    parsed.push(
+      <Derivation key={uuid()} tex={main} />
     )
 
     main = ''
