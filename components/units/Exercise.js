@@ -5,8 +5,9 @@ import Headline from '@/components/parts/Headline'
 import Subexercise from '@/components/parts/Subexercise'
 import Solution from '@/components/parts/Solution'
 import TeX from '@/components/parts/TeX'
-import EditButton from '@/components/ui/EditButton'
 import EditForm from '@/components/ui/EditForm'
+import EditButton from '@/components/ui/EditButton'
+import DeleteButton from '@/components/ui/DeleteButton'
 import SubGap from '@/components/ui/SubGap'
 import css from '@/scss/units/Exercise.module.scss'
 
@@ -22,9 +23,11 @@ export default function Exercise({ unit }) {
   return (
     <div className={css.container}>
       <div className={css.withoutSolution}>
+        <div className={css.withoutDeleteButton}>
+          
         <div className={css.withoutForm}>
           <div
-            className={`${css.withoutButton} ${!unit.parts ? css.interactive : ''}`}
+            className={`${css.withoutEditButton} ${!unit.parts ? css.interactive : ''}`}
             onClick={toggleSolution}
           >
             <Headline unit={unit} />
@@ -46,6 +49,10 @@ export default function Exercise({ unit }) {
             )}
           />
         }
+        </div>
+        <DeleteButton
+          unit={unit}
+        />
       </div>
       {!unit.parts && solutionInView &&
         <Solution
