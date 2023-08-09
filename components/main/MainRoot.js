@@ -27,68 +27,74 @@ export default function MainRoot({ module }) {
   function handlePin(unit) {
     setStack(prevStack => pinToStack(unit, prevStack))
   }
+  function toggleMenu() {
+    setMenuInView(prev => !prev)
+  }
+  function toggleStack() {
+    setStackInView(prev => !prev)
+  }
 
   return (
     <ModuleProvider value={module}>
       <StackProvider value={[stack, setStack]}>
-        {menuInView &&
-          <div className={css.menu}>
-            <div className={css.menuContent}>
-              <div className={css.moduleTitle}>
-                {module.displayName}
-              </div>
-              {module.script.map(unit => (
-                <div key={uuid()}>
-                  {unit.type === 'heading' &&
-                    <div className={css.menuHeading}>
-                      {unit.content}
-                    </div>
-                  }
-                  {unit.number &&
-                    <div className={css.menuUnitItem} onClick={() => { handlePin(unit) }}>
-                      <div className={css.unitNumber}>{unit.number}</div>
-                      <div>{unit.type}</div>
-                    </div>
-                  }
+          <div className={css.menuButton} onClick={toggleMenu}>
+            <i className='bi bi-list'></i>
+          </div>
+          {menuInView &&
+            <div className={css.menu}>
+              <div className={css.menuContent}>
+                <div className={css.moduleTitle}>
+                  {module.displayName}
                 </div>
-              ))}
+                {module.script.map(unit => (
+                  <div key={uuid()}>
+                    {unit.type === 'heading' &&
+                      <div className={css.menuHeading}>
+                        {unit.content}
+                      </div>
+                    }
+                    {unit.number &&
+                      <div className={css.menuUnitItem} onClick={() => { handlePin(unit) }}>
+                        <div className={css.unitNumber}>{unit.number}</div>
+                        <div>{unit.type}</div>
+                      </div>
+                    }
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className={css.hideMenu} onClick={() => { setMenuInView(false) }}>
-              <i className='bi bi-x-lg'></i>
-            </div>
+          }
+          <div className={css.script}>
+            {module.script.map(unit => (
+              <div key={uuid()}>
+                {unit.type === 'heading' && <Heading unit={unit} />}
+                {unit.type === 'text' && <Text unit={unit} />}
+                {unit.type === 'notion' && <Notion unit={unit} />}
+                {unit.type === 'definition' && <Definition unit={unit} />}
+                {unit.type === 'axiom' && <Axiom unit={unit} />}
+                {unit.type === 'theorem' && <Theorem unit={unit} />}
+                {unit.type === 'example' && <Example unit={unit} />}
+                {unit.type === 'exercise' && <Exercise unit={unit} />}
+                <Gap index={unit.index} />
+              </div>
+            ))}
           </div>
-        }
-        <div className={css.script}>
-          {module.script.map(unit => (
-            <div key={uuid()}>
-              {unit.type === 'heading' && <Heading unit={unit} />}
-              {unit.type === 'text' && <Text unit={unit} />}
-              {unit.type === 'notion' && <Notion unit={unit} />}
-              {unit.type === 'definition' && <Definition unit={unit} />}
-              {unit.type === 'axiom' && <Axiom unit={unit} />}
-              {unit.type === 'theorem' && <Theorem unit={unit} />}
-              {unit.type === 'example' && <Example unit={unit} />}
-              {unit.type === 'exercise' && <Exercise unit={unit} />}
-              <Gap index={unit.index} />
+          {stackInView && stack.length > 0 &&
+            <div className={css.stack}>
+              <div className={css.stackContent}>
+                {stack.map((unit, i) => (
+                  <StackUnit key={uuid()}
+                    unit={unit}
+                    stackIndex={i}
+                    setStack={setStack}
+                  />
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
-        {stackInView && stack.length &&
-          <div className={css.stack}>
-            <div className={css.stackContent}>
-              {stack.map((unit, i) => (
-                <StackUnit key={uuid()}
-                  unit={unit}
-                  stackIndex={i}
-                  setStack={setStack}
-                />
-              ))}
-            </div>
-            <div className={css.hideStack} onClick={() => { setStackInView(false) }}>
-              <i className='bi bi-x-lg'></i>
-            </div>
+          }
+          <div className={css.stackButton} onClick={toggleStack}>
+            <i className='bi bi-layers'></i>
           </div>
-        }
       </StackProvider>
     </ModuleProvider>
   )
