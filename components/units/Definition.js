@@ -47,12 +47,16 @@ export default function Definition({ unit }) {
       </div>
       {unit.parts &&
         <div className={css.parts}>
-          {unit.parts.map((part, j) => (
-            <div key={uuid()}>
-              <Part unit={unit} j={j} />
-              <SubGap index={unit.index} subIndex={j} />
-            </div>
-          ))}
+          {unit.parts.map((part, j) => {
+            if (unit.selectedSub === undefined || unit.selectedSub === j) {
+              return (
+                <div key={uuid()}>
+                  <Part unit={unit} j={j} />
+                  <SubGap index={unit.index} subIndex={j} />
+                </div>
+              )
+            }
+          })}
         </div>
       }
     </div>
