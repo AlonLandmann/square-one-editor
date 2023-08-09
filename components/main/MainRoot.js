@@ -18,7 +18,7 @@ import css from '@/scss/main/MainRoot.module.scss'
 export default function MainRoot({ module }) {
   const [stack, setStack] = useState([])
   const [stackInView, setStackInView] = useState(false)
-  const [menuInView, setMenuInView] = useState(true)
+  const [menuInView, setMenuInView] = useState(false)
 
   useEffect(() => {
     setStackInView(true)
