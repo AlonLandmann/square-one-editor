@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+.removeButton {
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+  color: rgb(133, 216, 237);
+  background: rgb(228, 243, 247);
+  transition: all 0.15s ease;
+  cursor: pointer;
+  &:hover {
+    color: #fff;
+      background: rgb(104, 198, 222);
+  }
+}
+.unit {
+  flex-grow: 1;
+}

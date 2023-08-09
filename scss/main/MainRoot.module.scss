@@ -1,7 +1,25 @@
-.root {
-  width: min(100%, 800px);
+.script {
+  width: min(100%, 970px);
   margin: auto;
   padding: 40px;
   display: flex;
   flex-direction: column;
+}
+
+.stack {
+  position: fixed;
+  bottom: 0;
+  z-index: 200;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  background: #fbfbfb;
+
+  .stackContent {
+    width: min(100%, 970px);
+    margin: auto;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
