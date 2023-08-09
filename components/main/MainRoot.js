@@ -10,6 +10,7 @@ import Axiom from '@/components/units/Axiom'
 import Theorem from '@/components/units/Theorem'
 import Example from '@/components/units/Example'
 import Exercise from '@/components/units/Exercise'
+import ModuleProvider from '@/lib/ModuleProvider'
 import StackProvider from '@/lib/StackProvider'
 import css from '@/scss/main/MainRoot.module.scss'
 
@@ -17,35 +18,37 @@ export default function MainRoot({ module }) {
   const [stack, setStack] = useState(module.script.slice(3, 5))
 
   return (
-    <StackProvider value={[stack, setStack]}>
-      <div className={css.script}>
-        {module.script.map(unit => (
-          <div key={uuid()}>
-            {unit.type === 'heading' && <Heading unit={unit} />}
-            {unit.type === 'text' && <Text unit={unit} />}
-            {unit.type === 'notion' && <Notion unit={unit} />}
-            {unit.type === 'definition' && <Definition unit={unit} />}
-            {unit.type === 'axiom' && <Axiom unit={unit} />}
-            {unit.type === 'theorem' && <Theorem unit={unit} />}
-            {unit.type === 'example' && <Example unit={unit} />}
-            {unit.type === 'exercise' && <Exercise unit={unit} />}
-            <Gap index={unit.index} />
-          </div>
-        ))}
-      </div>
-      {stack.length &&
-        <div className={css.stack}>
-          <div className={css.stackContent}>
-            {stack.map((unit, i) => (
-              <StackUnit key={uuid()}
-                unit={unit}
-                stackIndex={i}
-                setStack={setStack}
-              />
-            ))}
-          </div>
+    <ModuleProvider value={module}>
+      <StackProvider value={[stack, setStack]}>
+        <div className={css.script}>
+          {module.script.map(unit => (
+            <div key={uuid()}>
+              {unit.type === 'heading' && <Heading unit={unit} />}
+              {unit.type === 'text' && <Text unit={unit} />}
+              {unit.type === 'notion' && <Notion unit={unit} />}
+              {unit.type === 'definition' && <Definition unit={unit} />}
+              {unit.type === 'axiom' && <Axiom unit={unit} />}
+              {unit.type === 'theorem' && <Theorem unit={unit} />}
+              {unit.type === 'example' && <Example unit={unit} />}
+              {unit.type === 'exercise' && <Exercise unit={unit} />}
+              <Gap index={unit.index} />
+            </div>
+          ))}
         </div>
-      }
-    </StackProvider>
+        {stack.length &&
+          <div className={css.stack}>
+            <div className={css.stackContent}>
+              {stack.map((unit, i) => (
+                <StackUnit key={uuid()}
+                  unit={unit}
+                  stackIndex={i}
+                  setStack={setStack}
+                />
+              ))}
+            </div>
+          </div>
+        }
+      </StackProvider>
+    </ModuleProvider>
   )
 }

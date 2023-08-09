@@ -59,9 +59,21 @@ export default function TeX({ tex }) {
     )
   }
   function pushTextRef() {
+    let content, refNum, subNum
+    
+    if (main.split(',').length === 1) {
+      content = main
+      refNum = Number(main.split('.')[0])
+      subNum = Number(main.split('.')[1])
+    } else {
+      content = main.split(',')[0]
+      refNum = Number(main.split(',')[1].split('.')[0])
+      subNum = Number(main.split(',')[1].split('.')[1])
+    }
+
     parsed.push(
-      <Reference key={uuid()}>
-        {main.split(',')[0]}
+      <Reference key={uuid()} refNum={refNum} subNum={subNum}>
+        {content}
       </Reference>
     )
 
@@ -80,10 +92,14 @@ export default function TeX({ tex }) {
     )
   }
   function pushMathRef() {
+    let content = main.split(',')[0]
+    let refNum = Number(main.split(',')[1].split('.')[0])
+    let subNum = Number(main.split(',')[1].split('.')[1])
+
     parsed.push(
-      <Reference key={uuid()}>
+      <Reference key={uuid()} refNum={refNum} subNum={subNum}>
         <InlineMath>
-          {main.split(',')[0]}
+          {content}
         </InlineMath>
       </Reference>
     )
