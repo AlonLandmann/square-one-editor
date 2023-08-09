@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import StackUnit from '@/components/main/StackUnit'
 import Gap from '@/components/ui/Gap'
@@ -16,6 +16,11 @@ import css from '@/scss/main/MainRoot.module.scss'
 
 export default function MainRoot({ module }) {
   const [stack, setStack] = useState([])
+  const [stackInView, setStackInView] = useState(false)
+
+  useEffect(() => {
+    setStackInView(true)
+  }, [stack])
 
   return (
     <ModuleProvider value={module}>
@@ -35,7 +40,7 @@ export default function MainRoot({ module }) {
             </div>
           ))}
         </div>
-        {stack.length &&
+        {stackInView && stack.length &&
           <div className={css.stack}>
             <div className={css.stackContent}>
               {stack.map((unit, i) => (
@@ -45,6 +50,9 @@ export default function MainRoot({ module }) {
                   setStack={setStack}
                 />
               ))}
+            </div>
+            <div className={css.hideStack} onClick={() => { setStackInView(false) }}>
+              <i className='bi bi-x-lg'></i>
             </div>
           </div>
         }

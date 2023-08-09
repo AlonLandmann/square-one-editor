@@ -6,11 +6,19 @@
   flex-direction: column;
 }
 
+
+.stack::-webkit-scrollbar {
+  display: none;
+}
 .stack {
   position: fixed;
   bottom: 0;
   z-index: 200;
   width: 100%;
+  max-height: 60vh;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   border-top: 1px solid #ccc;
   background: #fbfbfb;
 
@@ -22,4 +30,19 @@
     flex-direction: column;
     gap: 20px;
   }
+
+  .hideStack {
+    position: absolute;
+    font-size: 18px;
+    top: 7px;
+    right: 10px;
+    color: #ccc;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    
+    &:hover {
+      color: #555;
+    }
+  }
+  
 }
