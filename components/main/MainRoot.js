@@ -15,7 +15,7 @@ import StackProvider from '@/lib/StackProvider'
 import css from '@/scss/main/MainRoot.module.scss'
 
 export default function MainRoot({ module }) {
-  const [stack, setStack] = useState(module.script.slice(3, 5))
+  const [stack, setStack] = useState([])
 
   return (
     <ModuleProvider value={module}>
