@@ -4,6 +4,7 @@ import Axiom from '@/components/units/Axiom'
 import Theorem from '@/components/units/Theorem'
 import Example from '@/components/units/Example'
 import Exercise from '@/components/units/Exercise'
+import Rule from '@/components/units/Rule'
 import css from '@/scss/main/StackUnit.module.scss'
 
 export default function ({ unit, stackIndex, setStack }) {
@@ -26,6 +27,7 @@ export default function ({ unit, stackIndex, setStack }) {
         {unit.type === 'theorem' && <Theorem unit={unit} />}
         {unit.type === 'example' && <Example unit={unit} />}
         {unit.type === 'exercise' && <Exercise unit={unit} />}
+        {unit.type === 'rule' && <Rule unit={unit} />}
       </div>
     </div>
   )

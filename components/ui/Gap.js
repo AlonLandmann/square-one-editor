@@ -88,6 +88,8 @@ export default function Gap({ index }) {
             <div className={css.unit} onClick={() => { addUnit('example', true) }}>Example M</div>
             <div className={css.unit} onClick={() => { addUnit('exercise') }}>Exercise</div>
             <div className={css.unit} onClick={() => { addUnit('exercise', true) }}>Exercise M</div>
+            <div className={css.unit} onClick={() => { addUnit('rule') }}>Rule</div>
+            <div className={css.unit} onClick={() => { addUnit('rule', true) }}>Rule M</div>
             <div className={css.cancel} onClick={toggleSelection}>
               <i className='bi bi-x-lg'></i>
             </div>

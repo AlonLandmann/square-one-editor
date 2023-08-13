@@ -10,6 +10,7 @@ import Axiom from '@/components/units/Axiom'
 import Theorem from '@/components/units/Theorem'
 import Example from '@/components/units/Example'
 import Exercise from '@/components/units/Exercise'
+import Rule from '@/components/units/Rule'
 import ModuleProvider from '@/lib/ModuleProvider'
 import StackProvider from '@/lib/StackProvider'
 import pinToStack from '@/lib/pinToStack'
@@ -75,6 +76,7 @@ export default function MainRoot({ module }) {
                 {unit.type === 'theorem' && <Theorem unit={unit} />}
                 {unit.type === 'example' && <Example unit={unit} />}
                 {unit.type === 'exercise' && <Exercise unit={unit} />}
+                {unit.type === 'rule' && <Rule unit={unit} />}
                 <Gap index={unit.index} />
               </div>
             ))}
