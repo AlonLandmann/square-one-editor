@@ -8,9 +8,9 @@ import EditButton from '@/components/ui/EditButton'
 import EditForm from '@/components/ui/EditForm'
 import DeleteButton from '@/components/ui/DeleteButton'
 import SubGap from '@/components/ui/SubGap'
-import css from '@/scss/units/Definition.module.scss'
+import css from '@/scss/units/Unit.module.scss'
 
-export default function Definition({ unit }) {
+export default function Unit({ unit }) {
   const [tex, setTex] = useState(unit.content)
   const [editFormInView, setEditFormInView] = useState(false)
 
@@ -40,7 +40,6 @@ export default function Definition({ unit }) {
             />
           }
         </div>
-
         <DeleteButton
           unit={unit}
         />
