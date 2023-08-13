@@ -49,9 +49,7 @@ export default function Theorem({ unit }) {
             />
           }
         </div>
-        <DeleteButton
-          unit={unit}
-        />
+        <DeleteButton unit={unit} />
       </div>
       {!unit.parts && proofInView &&
         <Proof

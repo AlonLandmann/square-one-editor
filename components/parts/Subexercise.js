@@ -53,10 +53,7 @@ export default function Subexercise({ unit, j }) {
             />
           }
         </div>
-        <DeleteButton
-          unit={unit}
-          j={j}
-        />
+        <DeleteButton unit={unit} j={j} />
       </div>
       {solutionInView &&
         <Solution

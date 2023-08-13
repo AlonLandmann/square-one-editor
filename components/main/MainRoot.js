@@ -54,7 +54,8 @@ export default function MainRoot({ module }) {
                     {unit.number &&
                       <div className={css.menuUnitItem} onClick={() => { handlePin(unit) }}>
                         <div className={css.unitNumber}>{unit.number}</div>
-                        <div>{unit.type}</div>
+                        <div className={css.unitType}>{unit.type.charAt(0).toUpperCase()}</div>
+                        <div className={css.unitName}>{unit.name}</div>
                       </div>
                     }
                   </div>

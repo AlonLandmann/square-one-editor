@@ -1,0 +1,23 @@
+.container {
+  flex-grow: 1;
+  padding-left: 10px;
+  display: flex;
+  gap: 20px;
+
+  input {
+    min-width: 0;
+    flex-grow: 1;
+    color: #ccc;
+  }
+
+  button {
+    color: #ccc;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    
+    &:hover {
+      color: #aaa;
+    }
+
+  }
+}

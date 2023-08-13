@@ -1,3 +1,4 @@
+import Name from '@/components/parts/Name'
 import css from '@/scss/parts/Headline.module.scss'
 
 export default function Headline({ unit }) {
@@ -6,13 +7,16 @@ export default function Headline({ unit }) {
   }
 
   return (
-    <div
-      className={css.container}
-      draggable
-      onDragStart={handleDragStart}
-    >
-      <div>{unit.type.charAt(0).toUpperCase() + unit.type.slice(1)}</div>
+    <div className={css.container}>
+      <div
+        className={css.type}
+        draggable
+        onDragStart={handleDragStart}
+      >
+        {unit.type.charAt(0).toUpperCase() + unit.type.slice(1)}
+      </div>
       <div>{unit.number}</div>
+      <Name unit={unit} />
     </div>
   )
 }

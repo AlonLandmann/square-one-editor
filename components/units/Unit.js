@@ -40,9 +40,7 @@ export default function Unit({ unit }) {
             />
           }
         </div>
-        <DeleteButton
-          unit={unit}
-        />
+        <DeleteButton unit={unit} />
       </div>
       {unit.parts &&
         <div className={css.parts}>

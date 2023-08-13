@@ -50,9 +50,7 @@ export default function Exercise({ unit }) {
           />
         }
         </div>
-        <DeleteButton
-          unit={unit}
-        />
+        <DeleteButton unit={unit} />
       </div>
       {!unit.parts && solutionInView &&
         <Solution

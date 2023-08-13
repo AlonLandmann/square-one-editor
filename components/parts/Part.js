@@ -17,7 +17,6 @@ export default function Part({ unit, j }) {
   return (
     <div className={css.container}>
       <div className={css.withoutDeleteButton}>
-
         <div className={css.withoutForm}>
           <div className={css.withoutEditButton}>
             <div className={css.number} draggable onDragStart={handleDragStart}>{j + 1}</div>
@@ -48,10 +47,7 @@ export default function Part({ unit, j }) {
           />
         }
       </div>
-      <DeleteButton
-        unit={unit}
-        j={j}
-      />
+      <DeleteButton unit={unit} j={j} />
     </div>
   )
 }

@@ -68,7 +68,7 @@
       margin-bottom: 2px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
       color: #ccc;
       transition: all 0.15s ease-in-out;
       cursor: pointer;
@@ -77,9 +77,13 @@
         color: #aaa;
       }
 
-      .unitNumber {
-        width: 40px;
+      .unitNumber, .unitType {
+        width: 30px;
         text-align: center;
+      }
+
+      .unitName {
+        padding-left: 10px;
       }
     }
   }

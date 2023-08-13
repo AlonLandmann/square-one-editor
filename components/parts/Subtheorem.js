@@ -53,10 +53,7 @@ export default function Subtheorem({ unit, j }) {
             />
           }
         </div>
-        <DeleteButton
-          unit={unit}
-          j={j}
-        />
+        <DeleteButton unit={unit} j={j} />
       </div>
       {proofInView &&
         <Proof
