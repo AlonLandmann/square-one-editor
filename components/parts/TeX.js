@@ -3,6 +3,7 @@ import { InlineMath } from 'react-katex'
 import Reference from '@/components/parts/Reference'
 import Derivation from '@/components/parts/Derivation'
 import Table from '@/components/parts/Table'
+import Highlight from '@/components/parts/Highlight'
 import 'katex/dist/katex.min.css'
 
 export default function TeX({ tex }) {
@@ -20,6 +21,7 @@ export default function TeX({ tex }) {
       else if (tex[i] === '§') { pushText(); mode = 'textRef' }
       else if (tex[i] === '£') { pushText(); mode = 'derivation' }
       else if (tex[i] === '#') { pushText(); mode = 'table' }
+      else if (tex[i] === '$') { pushText(); mode = 'highlight' }
       else if (tex[i] === '%') { pushText(); pushNewLine() }
       else { main = main.concat(tex[i]) }
 
@@ -50,6 +52,11 @@ export default function TeX({ tex }) {
       if (tex[i] === '#') { pushTable(); mode = 'text' }
       else { main = main.concat(tex[i]) }
       
+    } else if (mode === 'highlight') {
+
+      if (tex[i] === '$') { pushHighlight(); mode = 'text' }
+      else { main = main.concat(tex[i]) }
+
     }
   }
 
@@ -123,6 +130,13 @@ export default function TeX({ tex }) {
   function pushTable() {
     parsed.push(
       <Table key={uuid()} tex={main} />
+    )
+
+    main = ''
+  }
+  function pushHighlight() {
+    parsed.push(
+      <Highlight key={uuid()} tex={main} />
     )
 
     main = ''
