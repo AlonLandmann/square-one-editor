@@ -7,6 +7,7 @@ import Text from '@/components/units/Text'
 import Unit from '@/components/units/Unit'
 import Theorem from '@/components/units/Theorem'
 import Exercise from '@/components/units/Exercise'
+import unitShape from '@/lib/unitShape'
 import ModuleProvider from '@/lib/ModuleProvider'
 import StackProvider from '@/lib/StackProvider'
 import pinToStack from '@/lib/pinToStack'
@@ -66,13 +67,9 @@ export default function MainRoot({ module }) {
               <div key={uuid()}>
                 {unit.type === 'heading' && <Heading unit={unit} />}
                 {unit.type === 'text' && <Text unit={unit} />}
-                {unit.type === 'notion' && <Unit unit={unit} />}
-                {unit.type === 'definition' && <Unit unit={unit} />}
-                {unit.type === 'axiom' && <Unit unit={unit} />}
+                {unitShape(unit.type) === 'main' && <Unit unit={unit} />}
                 {unit.type === 'theorem' && <Theorem unit={unit} />}
-                {unit.type === 'example' && <Unit unit={unit} />}
                 {unit.type === 'exercise' && <Exercise unit={unit} />}
-                {unit.type === 'rule' && <Unit unit={unit} />}
                 <Gap index={unit.index} />
               </div>
             ))}

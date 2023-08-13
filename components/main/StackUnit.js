@@ -1,6 +1,7 @@
 import Unit from '@/components/units/Unit'
 import Theorem from '@/components/units/Theorem'
 import Exercise from '@/components/units/Exercise'
+import unitShape from '@/lib/unitShape'
 import css from '@/scss/main/StackUnit.module.scss'
 
 export default function ({ unit, stackIndex, setStack }) {
@@ -17,13 +18,9 @@ export default function ({ unit, stackIndex, setStack }) {
         <i className='bi bi-x-lg'></i>
       </div>
       <div className={css.unit}>
-        {unit.type === 'notion' && <Unit unit={unit} />}
-        {unit.type === 'definition' && <Unit unit={unit} />}
-        {unit.type === 'axiom' && <Unit unit={unit} />}
+        {unitShape(unit.type) === 'main' && <Unit unit={unit} />}
         {unit.type === 'theorem' && <Theorem unit={unit} />}
-        {unit.type === 'example' && <Unit unit={unit} />}
         {unit.type === 'exercise' && <Exercise unit={unit} />}
-        {unit.type === 'rule' && <Unit unit={unit} />}
       </div>
     </div>
   )
