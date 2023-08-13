@@ -10,7 +10,7 @@ export default function Derivation({ tex }) {
     <div className={css.container}>
       {table.map((line, i) => (
         <div key={uuid()} className={css.line}>
-          <div><TeX tex={`[\\{${line[0]}\\}]`} /></div>
+          <div><TeX tex={`[${line[0]}]`} /></div>
           <div><TeX tex={`[(${i + 1})]`} /></div>
           <div><TeX tex={`${line[1]}`} /></div>
           <div><TeX tex={`${line[2]}`} /></div>
