@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.4",
     "lodash": "^4.17.21",
     "mongoose": "^7.4.2",
     "next": "13.4.12",

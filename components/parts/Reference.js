@@ -1,3 +1,4 @@
+import Tooltip from '@mui/material/Tooltip'
 import { useModule } from '@/lib/ModuleProvider'
 import { useStack } from '@/lib/StackProvider'
 import pinToStack from '@/lib/pinToStack'
@@ -16,14 +17,23 @@ export default function Reference({ children, refNum, subNum }) {
     delete unit.selectedSub
   }
 
-  
+
   function handleClick() {
     setStack(prevStack => pinToStack(unit, prevStack))
   }
 
   return (
-    <span className={css.container} onClick={handleClick}>
-      {children}
-    </span>
+    <Tooltip
+      title={unit.name}
+      placement='top'
+      disableInteractive
+      disableHoverListener={!Boolean(unit.name)}
+      disableFocusListener={!Boolean(unit.name)}
+      disableTouchListener={!Boolean(unit.name)}
+    >
+      <span className={css.container} onClick={handleClick}>
+        {children}
+      </span>
+    </Tooltip>
   )
 }
