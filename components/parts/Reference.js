@@ -11,10 +11,12 @@ export default function Reference({ children, refNum, subNum }) {
 
   let unit = cloneDeep(module.script.filter(u => u.number === refNum)[0])
 
-  if (subNum || subNum === 0) {
-    unit.selectedSub = subNum - 1
-  } else {
-    delete unit.selectedSub
+  if (unit) {
+    if (subNum || subNum === 0) {
+      unit.selectedSub = subNum - 1
+    } else {
+      delete unit.selectedSub
+    }
   }
 
 
@@ -23,17 +25,21 @@ export default function Reference({ children, refNum, subNum }) {
   }
 
   return (
-    <Tooltip
-      title={unit.name}
-      placement='top'
-      disableInteractive
-      disableHoverListener={!Boolean(unit.name)}
-      disableFocusListener={!Boolean(unit.name)}
-      disableTouchListener={!Boolean(unit.name)}
-    >
-      <span className={css.container} onClick={handleClick}>
-        {children}
-      </span>
-    </Tooltip>
+    <>
+      {unit &&
+        <Tooltip
+          title={unit.name}
+          placement='top'
+          disableInteractive
+          disableHoverListener={!Boolean(unit.name)}
+          disableFocusListener={!Boolean(unit.name)}
+          disableTouchListener={!Boolean(unit.name)}
+        >
+          <span className={css.container} onClick={handleClick}>
+            {children}
+          </span>
+        </Tooltip>
+      }
+    </>
   )
 }
