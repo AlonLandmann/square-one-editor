@@ -1,0 +1,22 @@
+.container {
+  padding: 0px 30px 0px;
+  display: flex;
+  gap: 10px;
+  background: #fff;
+
+  .withoutDeleteButton {
+    flex-grow: 1;
+
+    .withoutForm {
+      flex-grow: 1;
+      display: flex;
+      gap: 30px;
+
+      .withoutEditButton {
+        flex-grow: 1;
+        font-size: 18px;
+        color: #aaa;
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid'
 import StackUnit from '@/components/main/StackUnit'
 import Gap from '@/components/ui/Gap'
 import Heading from '@/components/units/Heading'
+import SubHeading from '@/components/units/SubHeading'
 import Text from '@/components/units/Text'
 import Unit from '@/components/units/Unit'
 import Theorem from '@/components/units/Theorem'
@@ -51,6 +52,11 @@ export default function MainRoot({ module }) {
                         {unit.content}
                       </div>
                     }
+                    {unit.type === 'subheading' &&
+                      <div className={css.menuSubHeading}>
+                        {unit.content}
+                      </div>
+                    }
                     {unit.number &&
                       <div className={css.menuUnitItem} onClick={() => { handlePin(unit) }}>
                         <div className={css.unitNumber}>{unit.number}</div>
@@ -67,6 +73,7 @@ export default function MainRoot({ module }) {
             {module.script.map(unit => (
               <div key={uuid()}>
                 {unit.type === 'heading' && <Heading unit={unit} />}
+                {unit.type === 'subheading' && <SubHeading unit={unit} />}
                 {unit.type === 'text' && <Text unit={unit} />}
                 {unitShape(unit.type) === 'main' && <Unit unit={unit} />}
                 {unit.type === 'theorem' && <Theorem unit={unit} />}

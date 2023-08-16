@@ -75,6 +75,7 @@ export default function Gap({ index }) {
         <div className={css.selectionContainer}>
           <div className={css.selectionContent}>
             <div className={css.unit} onClick={() => { addUnit('heading') }}>Heading</div>
+            <div className={css.unit} onClick={() => { addUnit('subheading') }}>Sub Heading</div>
             <div className={css.unit} onClick={() => { addUnit('text') }}>Text</div>
             <div className={css.unit} onClick={() => { addUnit('notion') }}>Notion</div>
             <div className={css.unit} onClick={() => { addUnit('notion', true) }}>Notion M</div>
