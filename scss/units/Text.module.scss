@@ -2,6 +2,7 @@
   padding: 0px 20px;
   display: flex;
   gap: 10px;
+  color: #333;
   background: #fff;
 
   .withoutDeleteButton {
@@ -15,7 +16,6 @@
       .withoutEditButton {
         flex-grow: 1;
         text-align: justify;
-        color: #444;
       }
     }
   }
