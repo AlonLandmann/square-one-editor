@@ -38,7 +38,7 @@ export default function SubGap({ index, subIndex }) {
 
       const originSubIndex = Number(j)
 
-      updateModule(pathName, module => {
+      updateModule(pathName, index, module => {
         module = hydrate(module)
         module.script[index].parts.splice(subIndex + 1, 0, module.script[index].parts[originSubIndex])
 

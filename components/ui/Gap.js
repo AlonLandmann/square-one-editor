@@ -16,7 +16,7 @@ export default function Gap({ index }) {
     setSelectionInView(prev => !prev)
   }
   function addUnit(type, withParts = false) {
-    updateModule(pathName, module => {
+    updateModule(pathName, index, module => {
       module = hydrate(module)
       module.script.splice(index + 1, 0, createNewUnit(type, withParts))
       module = refShift(module)

@@ -15,7 +15,7 @@ export default function Name({ unit }) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    updateModule(pathName, module => {
+    updateModule(pathName, unit.index, module => {
       module.script[unit.index] = {
         ...cloneDeep(unit),
         name: name

@@ -71,7 +71,7 @@ export default function MainRoot({ module }) {
           }
           <div className={css.script}>
             {module.script.map(unit => (
-              <div key={uuid()}>
+              <div key={uuid()} id={unit.index}>
                 {unit.type === 'heading' && <Heading unit={unit} />}
                 {unit.type === 'subheading' && <SubHeading unit={unit} />}
                 {unit.type === 'text' && <Text unit={unit} />}

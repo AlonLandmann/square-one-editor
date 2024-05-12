@@ -10,7 +10,7 @@ export default function EditForm({ unit, tex, setTex, update }) {
     setTex(event.target.value)
   }
   function handleSubmit() {
-    updateModule(pathName, module => {
+    updateModule(pathName, unit.index, module => {
       module.script[unit.index] = update(module.script[unit.index], tex)
 
       return module

@@ -11,7 +11,7 @@ export default function DeleteButton({ unit, j }) {
 
   function handleDelete() {
     if (confirm('Are you sure you want to delete this unit?')) {
-      updateModule(pathName, module => {
+      updateModule(pathName, unit.index - 1, module => {
         module = hydrate(module)
 
         if (j || j === 0) {
