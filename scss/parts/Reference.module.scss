@@ -1,9 +1,11 @@
+@use '@/scss/colors';
+
 .container {
-  color: rgb(104, 198, 222);
+  color: colors.$ref;
   transition: all 0.15s ease-in-out;
   cursor: pointer;
   
   &:hover {
-    color: rgb(228, 243, 247);
+    color: colors.$ref-hover;
   }
 }

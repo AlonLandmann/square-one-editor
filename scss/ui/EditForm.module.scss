@@ -1,3 +1,5 @@
+@use 'scss/colors';
+
 .container {
   padding-top: 15px;
   display: flex;
@@ -10,8 +12,8 @@
     display: block;
     width: 100%;
     padding: 10px;
-    color: rgb(11, 131, 160);
-    background: rgb(246, 251, 253);
+    color: colors.$mid;
+    background: colors.$bright4;
     resize: none;
   }
 }

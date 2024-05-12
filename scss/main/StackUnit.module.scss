@@ -1,22 +1,27 @@
+@use '@/scss/colors';
+
 .container {
   display: flex;
   gap: 10px;
   align-items: stretch;
 }
+
 .removeButton {
   min-width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(133, 216, 237);
-  background: rgb(228, 243, 247);
+  color: colors.$light;
+  background: colors.$bright3;
   transition: all 0.15s ease;
   cursor: pointer;
+
   &:hover {
-    color: #fff;
-      background: rgb(104, 198, 222);
+    color: colors.$light-hover;
+    background: colors.$bright2;
   }
 }
+
 .unit {
   flex-grow: 1;
 }
