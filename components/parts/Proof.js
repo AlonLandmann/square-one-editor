@@ -14,7 +14,7 @@ export default function Proof({ unit, proof, update }) {
         <div className={css.withoutButton}>
           <div className={css.heading}>Proof</div>
           <TeX tex={tex} />
-          <div className={css.qed}><i className='bi bi-square-fill'></i></div>
+          <div className={css.qed}><i className='bi bi-square'></i></div>
         </div>
         <EditButton
           editFormInView={editFormInView}

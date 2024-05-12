@@ -8,7 +8,7 @@
   .withoutForm {
     display: flex;
     gap: 30px;
-    
+
     .withoutButton {
       padding: 0px 20px 0px 10px;
       flex-grow: 1;
@@ -17,9 +17,13 @@
         padding-bottom: 32px;
         color: #aaa;
       }
+
       .qed {
         padding-top: 32px;
-        color: #aaa;
+
+        & i {
+          color: #eee;
+        }
       }
     }
   }

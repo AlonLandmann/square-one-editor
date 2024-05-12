@@ -7,17 +7,18 @@
   input {
     min-width: 0;
     flex-grow: 1;
-    color: #ccc;
+    font-size: 17px;
+    color: #bbb;
   }
 
   button {
-    color: #ccc;
+    font-size: 17px;
+    color: #bbb;
     transition: all 0.15s ease-in-out;
     cursor: pointer;
     
     &:hover {
       color: #aaa;
     }
-
   }
 }
