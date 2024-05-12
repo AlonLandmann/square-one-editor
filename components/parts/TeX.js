@@ -69,7 +69,7 @@ export default function TeX({ tex }) {
   }
   function pushNewLine() {
     parsed.push(
-      <div key={uuid()} style={{ 'height': '35px' }}></div>
+      <div key={uuid()} style={{ 'height': '25px' }}></div>
     )
   }
   function pushTextRef() {
