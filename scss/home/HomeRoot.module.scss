@@ -1,6 +1,15 @@
 .root {
   padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.heading {
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
 .modules {
   display: flex;
   flex-direction: column;
