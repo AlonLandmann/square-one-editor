@@ -15,6 +15,7 @@ export default function Heading({ unit }) {
       <div className={css.withoutDeleteButton}>
         <div className={css.withoutForm}>
           <div className={css.withoutEditButton}>
+            <div className={css.number}>{unit.chapter}</div>
             <TeX tex={tex} />
           </div>
           <EditButton
