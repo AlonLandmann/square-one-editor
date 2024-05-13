@@ -12,7 +12,7 @@ export default function TeX({ tex }) {
   let main = ''
 
   const mathSplits = /^(=|<|>|\\neq|\\geq|\\leq)/
-  const escapePattern = /^~(\[|\]|§|£|#|\$|%|>|<)/
+  const escapePattern = /^~(\[|\]|§|£|#|\$|%|>|<|=|\\neq|\\geq|\\leq)/
 
   for (let i = 0; i <= tex.length; i += 1) {
     if (escapePattern.test(tex.slice(i))) {
@@ -20,6 +20,7 @@ export default function TeX({ tex }) {
       i += 1;
     } else if (mode === 'text') {
       if (i === tex.length) { pushText() }
+      else if (/^\[\[/.test(tex.slice(i))) { pushText(); mode = 'blockMath'; i += 1 }
       else if (tex[i] === '[') { pushText(); mode = 'math' }
       else if (tex[i] === '§') { pushText(); mode = 'textRef' }
       else if (tex[i] === '£') { pushText(); mode = 'derivation' }
@@ -31,6 +32,14 @@ export default function TeX({ tex }) {
       else { main = main.concat(tex[i]) }
     } else if (mode === 'textRef') {
       if (tex[i] === '§') { pushTextRef(); mode = 'text' }
+      else { main = main.concat(tex[i]) }
+    } else if (mode === 'blockMath') {
+      if (/^\]\]/.test(tex.slice(i))) { pushBlockMath(); mode = 'text'; i += 1 }
+      else if (tex[i] === '§') { pushBlockMath(); pushSpacer(); mode = 'blockMathRef' }
+      else if (mathSplits.test(tex.slice(i))) { pushBlockMath(); pushSpacer(); main = tex[i] }
+      else { main = main.concat(tex[i]) }
+    } else if (mode === 'blockMathRef') {
+      if (tex[i] === '§') { pushMathRef(); pushSpacer(); mode = 'blockMath' }
       else { main = main.concat(tex[i]) }
     } else if (mode === 'math') {
       if (tex[i] === ']') { pushMath(); mode = 'text' }
@@ -68,7 +77,7 @@ export default function TeX({ tex }) {
 
   function pushNewLine() {
     parsed.push(
-      <div key={uuid()} style={{ 'height': '25px' }}></div>
+      <div key={uuid()} style={{ height: '25px' }}></div>
     )
   }
 
@@ -102,9 +111,19 @@ export default function TeX({ tex }) {
     main = ''
   }
 
+  function pushBlockMath() {
+    parsed.push(
+      <div key={uuid()} style={{ display: 'inline-block' }}>
+        <BlockMath>{main}</BlockMath>
+      </div>
+    )
+
+    main = ''
+  }
+
   function pushSpacer() {
     parsed.push(
-      <span key={uuid()} style={{ 'marginRight': '0.2778em' }}></span>
+      <span key={uuid()} style={{ marginRight: '0.2778em' }}></span>
     )
   }
 
