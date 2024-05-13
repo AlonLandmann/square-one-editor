@@ -40,7 +40,7 @@ export default function Gap({ index }) {
 
       const originIndex = Number(i)
 
-      updateModule(pathName, module => {
+      updateModule(pathName, index, module => {
         module = hydrate(module)
         module.script.splice(index + 1, 0, module.script[originIndex])
 
