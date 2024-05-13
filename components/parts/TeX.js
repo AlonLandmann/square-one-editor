@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid'
-import { InlineMath } from 'react-katex'
+import { InlineMath, BlockMath } from 'react-katex'
 import Reference from '@/components/parts/Reference'
 import Derivation from '@/components/parts/Derivation'
 import Table from '@/components/parts/Table'
@@ -10,12 +10,15 @@ export default function TeX({ tex }) {
   let parsed = []
   let mode = 'text'
   let main = ''
-  
+
   const mathSplits = /^(=|<|>|\\neq|\\geq|\\leq)/
+  const escapePattern = /^~(\[|\]|§|£|#|\$|%)/
 
   for (let i = 0; i <= tex.length; i += 1) {
-    if (mode === 'text') {
-
+    if (escapePattern.test(tex.slice(i))) {
+      main = main.concat(tex[i + 1]);
+      i += 1;
+    } else if (mode === 'text') {
       if (i === tex.length) { pushText() }
       else if (tex[i] === '[') { pushText(); mode = 'math' }
       else if (tex[i] === '§') { pushText(); mode = 'textRef' }
@@ -24,39 +27,26 @@ export default function TeX({ tex }) {
       else if (tex[i] === '$') { pushText(); mode = 'highlight' }
       else if (tex[i] === '%') { pushText(); pushNewLine() }
       else { main = main.concat(tex[i]) }
-
     } else if (mode === 'textRef') {
-
       if (tex[i] === '§') { pushTextRef(); mode = 'text' }
       else { main = main.concat(tex[i]) }
-
     } else if (mode === 'math') {
-
       if (tex[i] === ']') { pushMath(); mode = 'text' }
       else if (tex[i] === '§') { pushMath(); pushSpacer(); mode = 'mathRef' }
       else if (mathSplits.test(tex.slice(i))) { pushMath(); pushSpacer(); main = tex[i] }
       else { main = main.concat(tex[i]) }
-
     } else if (mode === 'mathRef') {
-
       if (tex[i] === '§') { pushMathRef(); pushSpacer(); mode = 'math' }
       else { main = main.concat(tex[i]) }
-
     } else if (mode === 'derivation') {
-
       if (tex[i] === '£') { pushDerivation(); mode = 'text' }
       else { main = main.concat(tex[i]) }
-      
     } else if (mode === 'table') {
-
       if (tex[i] === '#') { pushTable(); mode = 'text' }
       else { main = main.concat(tex[i]) }
-      
     } else if (mode === 'highlight') {
-
       if (tex[i] === '$') { pushHighlight(); mode = 'text' }
       else { main = main.concat(tex[i]) }
-
     }
   }
 
@@ -67,14 +57,16 @@ export default function TeX({ tex }) {
 
     main = ''
   }
+
   function pushNewLine() {
     parsed.push(
       <div key={uuid()} style={{ 'height': '25px' }}></div>
     )
   }
+
   function pushTextRef() {
     let content, refNum, subNum
-    
+
     if (main.split(',').length === 1) {
       content = main
       refNum = Number(main.split('.')[0])
@@ -93,6 +85,7 @@ export default function TeX({ tex }) {
 
     main = ''
   }
+
   function pushMath() {
     parsed.push(
       <InlineMath key={uuid()}>{main}</InlineMath>
@@ -100,11 +93,13 @@ export default function TeX({ tex }) {
 
     main = ''
   }
+
   function pushSpacer() {
     parsed.push(
       <span key={uuid()} style={{ 'marginRight': '0.2778em' }}></span>
     )
   }
+
   function pushMathRef() {
     let content = main.split(',')[0]
     let refNum = Number(main.split(',')[1].split('.')[0])
@@ -120,6 +115,7 @@ export default function TeX({ tex }) {
 
     main = ''
   }
+
   function pushDerivation() {
     parsed.push(
       <Derivation key={uuid()} tex={main} />
@@ -134,6 +130,7 @@ export default function TeX({ tex }) {
 
     main = ''
   }
+  
   function pushHighlight() {
     parsed.push(
       <Highlight key={uuid()} tex={main} />
