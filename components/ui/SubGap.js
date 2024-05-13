@@ -12,7 +12,7 @@ export default function SubGap({ index, subIndex }) {
   const { query: { pathName } } = useRouter()
 
   function addSubUnit() {
-    updateModule(pathName, module => {
+    updateModule(pathName, index, module => {
       const newSubUnit = createNewSubunit(module.script[index].type)
 
       module = hydrate(module)
