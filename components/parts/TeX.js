@@ -12,7 +12,7 @@ export default function TeX({ tex }) {
   let main = ''
 
   const mathSplits = /^(=|<|>|\\neq|\\geq|\\leq)/
-  const escapePattern = /^~(\[|\]|§|£|#|\$|%)/
+  const escapePattern = /^~(\[|\]|§|£|#|\$|%|>|<)/
 
   for (let i = 0; i <= tex.length; i += 1) {
     if (escapePattern.test(tex.slice(i))) {
@@ -25,6 +25,8 @@ export default function TeX({ tex }) {
       else if (tex[i] === '£') { pushText(); mode = 'derivation' }
       else if (tex[i] === '#') { pushText(); mode = 'table' }
       else if (tex[i] === '$') { pushText(); mode = 'highlight' }
+      else if (tex[i] === '>') { pushText(); mode = 'bold' }
+      else if (tex[i] === '<') { pushText(); mode = 'italic' }
       else if (tex[i] === '%') { pushText(); pushNewLine() }
       else { main = main.concat(tex[i]) }
     } else if (mode === 'textRef') {
@@ -47,7 +49,13 @@ export default function TeX({ tex }) {
     } else if (mode === 'highlight') {
       if (tex[i] === '$') { pushHighlight(); mode = 'text' }
       else { main = main.concat(tex[i]) }
-    }
+    } else if (mode === 'bold') {
+      if (tex[i] === '>') { pushBold(); mode = 'text' }
+      else { main = main.concat(tex[i]) }
+    } else if (mode === 'italic') {
+      if (tex[i] === '<') { pushItalic(); mode = 'text' }
+      else { main = main.concat(tex[i]) }
+    } 
   }
 
   function pushText() {
@@ -130,10 +138,26 @@ export default function TeX({ tex }) {
 
     main = ''
   }
-  
+
   function pushHighlight() {
     parsed.push(
       <Highlight key={uuid()} tex={main} />
+    )
+
+    main = ''
+  }
+
+  function pushBold() {
+    parsed.push(
+      <span key={uuid()} style={{ fontWeight: 'bold' }}>{main}</span>
+    )
+
+    main = ''
+  }
+
+  function pushItalic() {
+    parsed.push(
+      <span key={uuid()} style={{ fontStyle: 'italic' }}>{main}</span>
     )
 
     main = ''
