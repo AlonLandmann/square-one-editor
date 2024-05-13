@@ -4,6 +4,7 @@ import Reference from '@/components/parts/Reference'
 import Derivation from '@/components/parts/Derivation'
 import Table from '@/components/parts/Table'
 import Highlight from '@/components/parts/Highlight'
+import List from '@/components/parts/List'
 import 'katex/dist/katex.min.css'
 
 export default function TeX({ tex }) {
@@ -12,7 +13,7 @@ export default function TeX({ tex }) {
   let main = ''
 
   const mathSplits = /^(=|<|>|\\neq|\\geq|\\leq)/
-  const escapePattern = /^~(\[|\]|§|£|#|\$|%|>|<|=|\\neq|\\geq|\\leq)/
+  const escapePattern = /^~(\[|\]|§|£|#|\$|\*|%|>|<|=|\\neq|\\geq|\\leq)/
 
   for (let i = 0; i <= tex.length; i += 1) {
     if (escapePattern.test(tex.slice(i))) {
@@ -28,6 +29,7 @@ export default function TeX({ tex }) {
       else if (tex[i] === '$') { pushText(); mode = 'highlight' }
       else if (tex[i] === '>') { pushText(); mode = 'bold' }
       else if (tex[i] === '<') { pushText(); mode = 'italic' }
+      else if (tex[i] === '*') { pushText(); mode = 'list'}
       else if (tex[i] === '%') { pushText(); pushNewLine() }
       else { main = main.concat(tex[i]) }
     } else if (mode === 'textRef') {
@@ -64,7 +66,10 @@ export default function TeX({ tex }) {
     } else if (mode === 'italic') {
       if (tex[i] === '<') { pushItalic(); mode = 'text' }
       else { main = main.concat(tex[i]) }
-    } 
+    } else if (mode === 'list') {
+      if (tex[i] === '*') { pushList(); mode = 'text' }
+      else { main = main.concat(tex[i]) }
+    }
   }
 
   function pushText() {
@@ -177,6 +182,14 @@ export default function TeX({ tex }) {
   function pushItalic() {
     parsed.push(
       <span key={uuid()} style={{ fontStyle: 'italic' }}>{main}</span>
+    )
+
+    main = ''
+  }
+
+  function pushList() {
+    parsed.push(
+      <List key={uuid()} tex={main} />
     )
 
     main = ''
