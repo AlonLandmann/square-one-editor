@@ -94,7 +94,7 @@ export default function TeX({ tex }) {
       refNum = Number(main.split('.')[0])
       subNum = Number(main.split('.')[1])
     } else {
-      content = main.split(',')[0]
+      content = main.split(',')[0].replace(/~X/g, main.split(',')[1])
       refNum = Number(main.split(',')[1].split('.')[0])
       subNum = Number(main.split(',')[1].split('.')[1])
     }
